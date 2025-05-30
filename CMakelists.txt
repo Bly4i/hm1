@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.15)
+project(WtDboExample)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_TOOLCHAIN_FILE "E:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    CACHE STRING "Vcpkg toolchain file")
+
+find_package(PostgreSQL REQUIRED)
+
+include_directories(
+    headers
+    ${PostgreSQL_INCLUDE_DIRS}
+    "E:/vcpkg/installed/x64-windows/include" 
+)
+
+add_executable(WtDboExample src/main.cpp)
+
+target_link_libraries(WtDboExample
+    PRIVATE
+        "E:/vcpkg/installed/x64-windows/lib/wt.lib"       
+        "E:/vcpkg/installed/x64-windows/lib/wtdbo.lib"    
+        PostgreSQL::PostgreSQL                            
+)
